@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Matador de Monstro</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+  <div id="app">
+
+    <div class="panel scores">
+
+      <!-- Dados do Jogador -->
+      <div class="score">
+        <h1>Jogador</h1>
+
+        <div class="life-bar">
+          <div class="life" :class="{danger: playerLife < 20}" :style="{width: playerLife + '%'}"></div>
+        </div>
+
+        <div>{{ playerLife }}%</div>
+      </div>
+
+      <!-- Dados do Monstro -->
+      <div class="score">
+        <h1>Monstro</h1>
+
+        <div class="life-bar">
+          <div class="life" :class="{danger: monsterLife < 20}" :style="{width: monsterLife + '%'}"></div>
+        </div>
+
+        <div>{{ monsterLife }}%</div>
+      </div>
+
+    </div>
+
+    <div class="panel result" v-if="hasResult">
+      <div class="win" v-if="monsterLife == 0">You Win!!! :)</div>
+      <div class="lose" v-else>Game Over! :(</div>
+    </div>
+
+    <div class="panel buttons">
+      <template v-if="running">
+        <button class="button attack" @click="attack(false)">Ataque</button>
+        <button class="button especial-attack" @click="attack(true)">Ataque Especial</button>
+        <button class=" button heal" @click="healAndHurt">Curar</button>
+        <button class="button give-up" @click="running = false">Desistir</button>
+      </template>
+
+      <button class="button new-game" v-else @click="startGame">Iniciar Jogo</button>
+    </div>
+
+    <div class="panel logs" v-if="logs.length" v-if="log.length" class="panel logs">
+      <ul>
+        <li v-for="log in logs" class="log" :class="log.classe">{{ log.text }}</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+
+</body>
+
+</html>
